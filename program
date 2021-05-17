@@ -1,0 +1,95 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp3
+{
+    public struct Person
+    {
+        public string name;
+        public string surname;
+        public string patronymic;
+    }
+    public struct Baggage
+    {
+        public int LuggageAmount;
+        public double Weight;
+    }
+    public struct Passenger
+    {
+        public Person Name;
+        public Baggage Bagg;
+    }
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Random ran = new Random();
+
+            string[] name = new string[] { "Матвiй", "Максим", "Артем", "Ярослав", "Давид", "Владислав", "Сергiй", "Олекандр", "Григорiй", "Олексiй" };
+            string[] surname = new string[] { "Мельник", "Шевченко", "Коваленко", "Бондаренко", "Бойко", "Ткаченко", "Кравченко", "Ковальчук", "Коваль", "Олiйник" };
+            string[] patronymic = new string[] { "Миколайович", "Володимирович", "Олександрович", "Iванович", "Васильович", "Васильович", "Сергiйович", "Вiкторович", "Михайлович", "Владиславович" };
+
+            Person[] Persons = new Person[10];
+            
+            for (int y = 0; y < 10; y++)
+            {
+                Persons[y] = new Person();
+            }
+
+            for (int y = 0; y < 10; y++)
+            {
+                Persons[y].surname = surname[ran.Next(0, 9)];
+                Persons[y].name = name[ran.Next(0, 9)];
+                Persons[y].patronymic = patronymic[ran.Next(0, 9)];
+            }
+
+            Baggage[] baggage = new Baggage[10];
+
+            for (int i = 0; i < 10; i++)
+            {
+                baggage[i] = new Baggage();
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                baggage[i].LuggageAmount = ran.Next(1, 3);
+                baggage[i].Weight =  ran.Next(5, 40) ;
+            }
+           
+            Passenger[] P = new Passenger[10];
+
+            for (int i = 0; i < 10; i++)
+            {
+                P[i].Name.name = Persons[i].name;
+                P[i].Name.surname = Persons[i].surname;
+                P[i].Name.patronymic = Persons[i].patronymic;
+                P[i].Bagg.LuggageAmount = baggage[i].LuggageAmount;
+                P[i].Bagg.Weight = baggage[i].Weight;
+
+                Console.WriteLine(" Пасажир: " + P[i].Name.surname + " " + P[i].Name.name + " " + P[i].Name.patronymic + "  Багаж: Кiлькiсть " + P[i].Bagg.LuggageAmount + " Вага " + P[i].Bagg.Weight + " кг ");
+            }
+
+            Console.WriteLine("\n Максимальна кiлькiсть багажу 1 одиниця. Максимальна вага до 25 кг.\n");
+
+            for (int i = 0; i < 10; i++)
+            {
+                if (baggage[i].Weight > 25 & baggage[i].LuggageAmount > 1)
+                {
+                    Console.WriteLine($" Пасажир {P[i].Name.surname + " " + P[i].Name.name + " " + P[i].Name.patronymic} має {baggage[i].LuggageAmount} багажа при дозволеному одному, який важчий на {P[i].Bagg.Weight - 25} кг за допустиму вагу.");
+                }
+                else if (baggage[i].Weight > 25)
+                {
+                Console.WriteLine($" Пасажир {P[i].Name.surname + " " + P[i].Name.name + " " + P[i].Name.patronymic} має багаж важчий на {P[i].Bagg.Weight - 25} кг за допустиму вагу.");
+                }
+                else if (baggage[i].LuggageAmount > 1)
+                {
+                    Console.WriteLine($" Пасажир {P[i].Name.surname + " " + P[i].Name.name + " " + P[i].Name.patronymic} має {baggage[i].LuggageAmount} багажа при дозволеному одному.");
+                }
+             }
+            Console.ReadKey();
+        }
+    }
+}
